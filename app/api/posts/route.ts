@@ -1,28 +1,23 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import pool from '@/lib/db'
 
 export async function GET() {
-  const dbPath = path.join(process.cwd(), 'data', 'db.json')
-  const db = JSON.parse(fs.readFileSync(dbPath, 'utf-8'))
-  return NextResponse.json(db.posts)
+  try{
+    const result = await pool.query('SELECT * FROM posts ORDER BY created_at DESC')
+    return NextResponse.json(result.rows)
+  } catch (error) {
+    return NextResponse.json({error: 'Failed to fetch posts'})
+  }
 }
 
 export async function POST(request: Request) {
-  const { title, content } = await request.json()
-  const dbPath = path.join(process.cwd(), 'data', 'db.json')
-  const db = JSON.parse(fs.readFileSync(dbPath, 'utf-8'))
+  try{
+    const {title, description, content} = await request.json()
+    const result = await pool.query('INSERT INTO posts (title, description, content, created_at) VALUES ($1, $2, $3, NOW()) RETURNING *', [title, description,])
 
-  const newPost = {
-    id: Date.now(),
-    title,
-    content,
-    date: new Date().toISOString().split('T')[0]
+    return NextResponse.json(result.rows[0])
+  } catch (error) {
+    return NextResponse.json({error: 'Failed to create post'}, {status: 500})
   }
 
-  db.posts.push(newPost)
-  fs.writeFileSync(dbPath, JSON.stringify(db, null, 2))
-
-  return NextResponse.json(newPost)
 }
-

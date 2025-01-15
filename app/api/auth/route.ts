@@ -1,16 +1,25 @@
-import {NextResponse} from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import { NextResponse } from 'next/server'
+import pool from '@/lib/db'
 
 export async function POST(request: Request) {
-    const {username, password} = await request.json()
-    const dbPath = path.join(process.cwd(), 'data', 'db.json')
-    const db = JSON.parse(fs.readFileSync(dbPath, 'utf-8'))
+    try {
+        const { username, password } = await request.json()
+        
+        const result = await pool.query(
+            'SELECT * FROM users WHERE username = $1 AND password = $2',
+            [username, password]
+        )
 
-    const user = db.users.find((u:any) => u.username === username && u.password === password)
-    if (user) {
-        return NextResponse.json({success: true})
-    } else {
-        return NextResponse.json({success:false}, {status: 401})
+        if (result.rows.length > 0) {
+            return NextResponse.json({ success: true })
+        } else {
+            return NextResponse.json({ success: false }, { status: 401 })
+        }
+    } catch (error) {
+        console.error('Auth error:', error)
+        return NextResponse.json(
+            { error: 'Authentication failed' }, 
+            { status: 500 }
+        )
     }
 }
