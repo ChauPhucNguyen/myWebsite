@@ -21,7 +21,7 @@ export default function Login() {
 
     if (data.success) {
       localStorage.setItem('isLoggedIn', 'true')
-      router.push('/admin')
+      router.push('/')
     } else {
       setError('Invalid credentials')
     }

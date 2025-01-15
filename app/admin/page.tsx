@@ -10,7 +10,7 @@ export default function Admin() {
     const router = useRouter()
 
     useEffect(() => {
-        const loggedIn = localStorage.getItem('LoggedIn') === 'true'
+        const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
         setIsLoggedin(loggedIn)
         if (!loggedIn) {
             router.push('/login')
@@ -22,7 +22,11 @@ export default function Admin() {
         const response = await fetch('/api/posts', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({title, description, content}),          
+            body: JSON.stringify({
+                title,
+                description,
+                content
+            }),          
         })
         if (response.ok) {
             setTitle('')
@@ -30,7 +34,8 @@ export default function Admin() {
             setContent('')
             alert("Blog post created successfully")
         } else {
-            alert("Failed to create blog post")
+            const error = await response.json()
+            alert(error.message || "Failed to create blog post")
         }
     }
 
@@ -45,7 +50,7 @@ export default function Admin() {
                     <input
                         type="text"
                         id="title"
-                        value="title"
+                        value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                         required
@@ -56,7 +61,7 @@ export default function Admin() {
                     <input
                         type="text"
                         id="description"
-                        value="description"
+                        value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                         required
@@ -66,7 +71,7 @@ export default function Admin() {
                   <label htmlFor="content" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Content</label>
                   <textarea
                     id="content"
-                    value="content"
+                    value={content}
                     onChange={(e) => setContent(e.target.value)}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     required

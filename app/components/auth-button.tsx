@@ -31,7 +31,7 @@ const authButton = () => {
                 isLoggedIn ? (
                     <>
                     <Link href="/admin" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">
-                        placeholder
+                        New Blog
                     </Link>
                     <button onClick={handleLogout} className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">
                         Logout
