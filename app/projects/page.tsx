@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 const projects = [
-  { id: 1, name: 'Project 1', description: 'A brief description of Project 1', github: 'https://github.com/yourusername/project1' },
+  { id: 1, name: 'IGVC', description: 'Autonomous vehicle project for the Intelligent Ground Vehicle Competition (IGVC).', github: 'https://github.com/ChauPhucNguyen/IGVC_2024' },
   { id: 2, name: 'Project 2', description: 'A brief description of Project 2', github: 'https://github.com/yourusername/project2' },
   { id: 3, name: 'Project 3', description: 'A brief description of Project 3', github: 'https://github.com/yourusername/project3' },
 ]

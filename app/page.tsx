@@ -15,7 +15,7 @@ export default function Home() {
 
       <div className="flex space-x-6">
         <a
-          href="/current_resume.pdf"
+          href="/Chau_s_Resume.pdf"
           className="relative group"
           download="current_resume.pdf"
         >
