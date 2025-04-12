@@ -2,8 +2,8 @@ import Link from 'next/link'
 
 const projects = [
   { id: 1, name: 'IGVC', description: 'Autonomous vehicle project for the Intelligent Ground Vehicle Competition (IGVC).', github: 'https://github.com/ChauPhucNguyen/IGVC_2024' },
-  { id: 2, name: 'Project 2', description: 'A brief description of Project 2', github: 'https://github.com/yourusername/project2' },
-  { id: 3, name: 'Project 3', description: 'A brief description of Project 3', github: 'https://github.com/yourusername/project3' },
+  { id: 2, name: 'bkp', description: 'CLI for automated database backups with scheduling, compression, cloud/local storage, logging, and restoring.', github: 'https://github.com/yourusername/project2' },
+  { id: 3, name: 'Meridian', description: 'Real-time social media analysis application.', github: 'https://github.com/yourusername/project3' },
 ]
 
 export default function Projects() {

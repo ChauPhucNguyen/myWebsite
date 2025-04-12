@@ -28,7 +28,7 @@ export default function Home() {
         </a>
 
         <a
-          href="https://www.linkedin.com/in/chauphucnguyen"
+          href="https://www.linkedin.com/in/chau-phuc-nguyen-08b284245"
           className="relative group"
           target="_blank"
           rel="noopener noreferrer"

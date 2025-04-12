@@ -28,7 +28,7 @@ const AuthButton = () => {
 
     return (
         <div className="flex space-x-2">
-            {isLoggedIn ? (
+            {isLoggedIn && (
                 <>
                     <Link href="/admin" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">
                         New Blog
@@ -37,10 +37,6 @@ const AuthButton = () => {
                         Logout
                     </button> 
                 </>
-            ) : (
-                <Link href="/login" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">
-                    Login
-                </Link>
             )}
         </div>
     )

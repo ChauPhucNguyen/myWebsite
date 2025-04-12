@@ -1,4 +1,4 @@
-import { Pool } from 'pg'
+import { Pool } from 'pg';
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -6,6 +6,9 @@ const pool = new Pool({
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT || '5432'),
   database: process.env.DB_NAME,
-})
+  ssl: {
+    rejectUnauthorized: false, // Required for RDS SSL connections
+  },
+});
 
-export default pool
+export default pool;

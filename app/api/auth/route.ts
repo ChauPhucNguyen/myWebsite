@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import pool from '@/lib/db'
 
+
 export async function POST(request: Request) {
     try {
         const { username, password } = await request.json()

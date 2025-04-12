@@ -8,8 +8,8 @@ const AuthButton = dynamic(() => import('./components/auth-button'))
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'My Portfolio',
-  description: 'A showcase of my work and thoughts',
+  title: 'Web Portfolio',
+  description: 'Why are you reading this?',
 }
 
 export default function RootLayout({
