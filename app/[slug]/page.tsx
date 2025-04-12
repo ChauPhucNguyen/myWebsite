@@ -8,7 +8,7 @@ export default function SecretSlug(){
     const router = useRouter()
     const {slug} = params
 
-    const secretSlug = 'letmein123'
+    const secretSlug = process.env.SECRET_SLUG
 
     useEffect(() => {
         if (slug != secretSlug){
