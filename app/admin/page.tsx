@@ -1,6 +1,6 @@
 'use client'
 import {useState, useEffect} from 'react'
-import {unauthorized, useRouter} from 'next/navigation'
+import {useRouter} from 'next/navigation'
 
 export default function Admin() {
     const [title, setTitle] = useState('')
@@ -8,9 +8,12 @@ export default function Admin() {
     const [description, setDescription] = useState('')
     const [isLoggedin, setIsLoggedin] = useState(false)
     const [authorized, setAuthorized] = useState(false)
+    const [isClient, setIsClient] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
+        setIsClient(true)
+        // Only access localStorage/sessionStorage after component is mounted
         const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
         const fromSecretRoute = sessionStorage.getItem('secretRouteAccess') === 'true'
         
@@ -46,7 +49,9 @@ export default function Admin() {
         }
     }
 
-    if (!isLoggedin || !unauthorized) return null
+    // Don't render until client-side hydration is complete
+    if (!isClient) return null;
+    if (!isLoggedin || !authorized) return null;
 
     return (
         <div className="max-w-2xl mx-auto p-4">

@@ -1,17 +1,22 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { unauthorized, useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
 export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const router = useRouter()
   const [authorized, setAuthorized] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
-    const fromSecretRoute = sessionStorage.getItem('secretRouteAccess') == 'true'
-    if (!fromSecretRoute){
+    setIsClient(true)
+    // Only check sessionStorage after component is mounted
+    const fromSecretRoute = sessionStorage.getItem('secretRouteAccess') === 'true'
+    if (!fromSecretRoute) {
+      // Redirect to home if accessed directly
       router.push('/')
       return
     }
@@ -35,7 +40,10 @@ export default function Login() {
       setError('Invalid credentials')
     }
   }
-  if (!unauthorized) return null
+
+  // Don't render until client-side hydration is complete
+  if (!isClient) return null;
+  if (!authorized) return null;
 
   return (
     <div className="max-w-md mx-auto mt-10">
@@ -71,4 +79,3 @@ export default function Login() {
     </div>
   )
 }
-
