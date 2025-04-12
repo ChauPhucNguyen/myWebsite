@@ -1,20 +1,27 @@
 'use client'
 import {useState, useEffect} from 'react'
-import {useRouter} from 'next/navigation'
+import {unauthorized, useRouter} from 'next/navigation'
 
 export default function Admin() {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [description, setDescription] = useState('')
     const [isLoggedin, setIsLoggedin] = useState(false)
+    const [authorized, setAuthorized] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
         const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
+        const fromSecretRoute = sessionStorage.getItem('secretRouteAccess') === 'true'
+        
         setIsLoggedin(loggedIn)
-        if (!loggedIn) {
-            router.push('/login')
+        
+        if (!loggedIn || !fromSecretRoute) {
+            router.push('/')
+            return
         }
+        
+        setAuthorized(true)
     }, [router])
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -39,7 +46,7 @@ export default function Admin() {
         }
     }
 
-    if (!isLoggedin) return null
+    if (!isLoggedin || !unauthorized) return null
 
     return (
         <div className="max-w-2xl mx-auto p-4">

@@ -13,7 +13,9 @@ export default function SecretSlug(){
     useEffect(() => {
         if (slug != secretSlug){
             router.push('/')
+            return
         }
+        sessionStorage.setItem('secretRouteAccess', 'true')
     }, [slug,router])
 
         if (slug == secretSlug){

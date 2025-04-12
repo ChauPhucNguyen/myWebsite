@@ -1,12 +1,22 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { unauthorized, useRouter } from 'next/navigation'
 export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const router = useRouter()
+  const [authorized, setAuthorized] = useState(false)
+
+  useEffect(() => {
+    const fromSecretRoute = sessionStorage.getItem('secretRouteAccess') == 'true'
+    if (!fromSecretRoute){
+      router.push('/')
+      return
+    }
+    setAuthorized(true)
+  }, [router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,6 +35,7 @@ export default function Login() {
       setError('Invalid credentials')
     }
   }
+  if (!unauthorized) return null
 
   return (
     <div className="max-w-md mx-auto mt-10">
