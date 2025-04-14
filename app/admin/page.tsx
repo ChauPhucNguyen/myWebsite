@@ -15,11 +15,10 @@ export default function Admin() {
         setIsClient(true)
         // Only access localStorage/sessionStorage after component is mounted
         const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
-        const fromSecretRoute = sessionStorage.getItem('secretRouteAccess') === 'true'
         
         setIsLoggedin(loggedIn)
         
-        if (!loggedIn || !fromSecretRoute) {
+        if (!loggedIn) {
             router.push('/')
             return
         }
